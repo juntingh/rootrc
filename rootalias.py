@@ -1,4 +1,4 @@
-from ROOT import TH1D, TCanvas, gPad, TLegend
+from ROOT import TH1D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRed, kBlue, kGreen
 
 def set_legend_style(lg):
   lg.SetTextFont(43)
@@ -23,6 +23,7 @@ def set_graph_style(gr):
   gr.GetYaxis().SetLabelSize(28)
   gr.GetXaxis().SetTitleSize(28)
   gr.GetYaxis().SetTitleSize(28)
+  gr.SetLineWidth(2)
   gr.SetTitle("")
 
 def set_h1_style(h1):
