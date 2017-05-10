@@ -1,4 +1,4 @@
-from ROOT import TH1D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRed, kBlue, kGreen
+from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRed, kBlue, kGreen
 
 def set_legend_style(lg):
   lg.SetTextFont(43)
