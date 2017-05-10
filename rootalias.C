@@ -47,6 +47,45 @@ void setH1Style(TH1* h1)
   h1->SetTitle("");
 }
 
+void setH2Style(TH2* h2)
+{
+  h2->GetYaxis()->SetTitleOffset(1.1);
+  h2->GetXaxis()->SetTitleOffset(1.05);
+  h2->GetZaxis()->SetTitleOffset(1.2);
+  h2->GetXaxis()->CenterTitle();
+  h2->GetYaxis()->CenterTitle();
+  h2->GetZaxis()->CenterTitle();
+  h2->GetXaxis()->SetTitleFont(43);
+  h2->GetYaxis()->SetTitleFont(43);
+  h2->GetZaxis()->SetTitleFont(43);
+  h2->GetXaxis()->SetLabelFont(43);
+  h2->GetYaxis()->SetLabelFont(43);
+  h2->GetZaxis()->SetLabelFont(43);
+  h2->GetXaxis()->SetLabelSize(28);
+  h2->GetYaxis()->SetLabelSize(28);
+  h2->GetZaxis()->SetLabelSize(28);
+  h2->GetXaxis()->SetTitleSize(28);
+  h2->GetYaxis()->SetTitleSize(28);
+  h2->GetZaxis()->SetTitleSize(28);
+  h2->GetYaxis()->SetNdivisions(505, 1);
+  h2->GetXaxis()->SetNdivisions(505, 1);
+  h2->GetZaxis()->SetNdivisions(505, 1);
+  h2->SetTitle("");
+}
+
+void setH2ColorStyle()
+{
+  const Int_t NRGBs = 5;
+  const Int_t NCont = 255;
+
+  Double_t stops[NRGBs] = { 0.00, 0.34, 0.61, 0.84, 1.00 };
+  Double_t red[NRGBs]   = { 0.00, 0.00, 0.87, 1.00, 0.51 };
+  Double_t green[NRGBs] = { 0.00, 0.81, 1.00, 0.20, 0.00 };
+  Double_t blue[NRGBs]  = { 0.51, 1.00, 0.12, 0.00, 0.00 };
+  TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
+  gStyle->SetNumberContours(NCont);
+}
+
 void setMargin()
 {
   gPad->SetLeftMargin(0.15);
