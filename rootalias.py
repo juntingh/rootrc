@@ -1,4 +1,4 @@
-from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRed, kBlue, kGreen, kOrange, TColor, TPaveStats, TFile, TF1
+from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRed, kBlue, kGreen, kOrange, TColor, TPaveStats, TFile, TF1, TPad, TLatex
 import numpy as np
 
 
