@@ -2,6 +2,25 @@ from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, kBlack, kRe
 import numpy as np
 
 
+def set_rooplot_style(frame):
+    frame.SetMarkerStyle(24)
+    frame.SetMarkerSize(1.2)
+    frame.SetMarkerColor(kBlack)
+    frame.GetYaxis().SetTitleOffset(1.2)
+    frame.GetXaxis().SetTitleOffset(1.2)
+    frame.GetXaxis().CenterTitle()
+    frame.GetYaxis().CenterTitle()
+    frame.GetXaxis().SetTitleFont(43)
+    frame.GetYaxis().SetTitleFont(43)
+    frame.GetXaxis().SetLabelFont(43)
+    frame.GetYaxis().SetLabelFont(43)
+    frame.GetXaxis().SetLabelSize(28)
+    frame.GetYaxis().SetLabelSize(28)
+    frame.GetXaxis().SetTitleSize(28)
+    frame.GetYaxis().SetTitleSize(28)
+    frame.SetTitle('')
+
+
 def set_legend_style(lg):
     lg.SetTextFont(43)
     lg.SetTextSize(28)
