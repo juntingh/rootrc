@@ -107,3 +107,12 @@ def set_h2_color_style():
 def set_margin():
     gPad.SetLeftMargin(0.15)
     gPad.SetBottomMargin(0.15)
+
+
+def get_max_y(h1s):
+    max_y = 0.0
+    for h1 in h1s:
+        h1_maximum = h1.GetMaximum()
+        if h1_maximum > max_y:
+            max_y = h1_maximum
+    return max_y
