@@ -116,3 +116,59 @@ def get_max_y(h1s):
         if h1_maximum > max_y:
             max_y = h1_maximum
     return max_y
+
+
+def draw_statboxes(h1, h2, **kwargs):
+    position = kwargs.get('position', 'right')
+    if position not in ['left', 'right', 'top']:
+        raise Exception('The provided position option {} does not exist.'.format(position))
+
+    width = 0.23
+    height = 0.2
+    corner_x = 0.63
+    corner_y = 0.42
+    gap_y = 0.04
+    gap_x = 0.04
+    if position == 'left':
+        corner_x = 0.2
+    elif position == 'top':
+        corner_x = 0.19
+        corner_y = 0.66
+
+    ndcs_1 = [
+        corner_x,
+        corner_y,
+        corner_x + width,
+        corner_y + height
+    ]
+    ndcs_2 = [
+        corner_x,
+        corner_y + height + gap_y,
+        corner_x + width,
+        corner_y + height + gap_y + height
+    ]
+    if position == 'top':
+        ndcs_2 = [
+            corner_x + width + gap_x,
+            corner_y,
+            corner_x + width + gap_x + width,
+            corner_y + height
+        ]
+
+    p1 = h1.GetListOfFunctions().FindObject("stats")
+    p1.SetTextColor(h1.GetLineColor())
+    p1.SetLineColor(h1.GetLineColor())
+    p1.SetX1NDC(ndcs_1[0])
+    p1.SetY1NDC(ndcs_1[1])
+    p1.SetX2NDC(ndcs_1[2])
+    p1.SetY2NDC(ndcs_1[3])
+    p1.Draw()
+
+    p2 = h2.GetListOfFunctions().FindObject("stats")
+    p2.SetTextColor(h2.GetLineColor())
+    p2.SetLineColor(h2.GetLineColor())
+    p2.SetX1NDC(ndcs_2[0])
+    p2.SetY1NDC(ndcs_2[1])
+    p2.SetX2NDC(ndcs_2[2])
+    p2.SetY2NDC(ndcs_2[3])
+    p2.Draw()
