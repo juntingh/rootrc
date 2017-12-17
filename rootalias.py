@@ -119,12 +119,17 @@ def get_max_y(h1s):
     return max_y
 
 
-def draw_statbox(h1):
+def draw_statbox(h1, **kwargs):
+    x1 = kwargs.get('x1', 0.72)
+    x2 = kwargs.get('x2', 0.95)
+    y1 = kwargs.get('y1', 0.75)
+    y2 = kwargs.get('y2', 0.95)
+
     p1 = h1.GetListOfFunctions().FindObject("stats")
-    p1.SetX1NDC(0.72)
-    p1.SetY1NDC(0.75)
-    p1.SetX2NDC(0.95)
-    p1.SetY2NDC(0.95)
+    p1.SetX1NDC(x1)
+    p1.SetY1NDC(y1)
+    p1.SetX2NDC(x2)
+    p1.SetY2NDC(y2)
     p1.Draw()
 
 
