@@ -227,3 +227,18 @@ def draw_statboxesss(h1, h2, h3, h4):
         p.SetX2NDC(corner_x + width)
         p.SetY2NDC(corner_y + height + delta_y * i)
         p.Draw()
+
+
+def get_graph_from_hist(h1):
+    xs = []
+    ys = []
+    x_errs = []
+    y_errs = []
+
+    for i in range(1, h1.GetNbinsX() + 1):
+        xs.append(h1.GetBinCenter(i))
+        ys.append(h1.GetBinContent(i))
+        x_errs.append(h1.GetBinWidth(i) / 2.)
+        y_errs.append((h1.GetBinContent(i))**0.5)
+
+    return TGraphErrors(len(xs), np.array(xs), np.array(ys), np.array(x_errs), np.array(y_errs))
