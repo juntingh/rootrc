@@ -125,7 +125,7 @@ def draw_statbox(h1, **kwargs):
     y1 = kwargs.get('y1', 0.75)
     y2 = kwargs.get('y2', 0.95)
 
-    p1 = h1.GetListOfFunctions().FindObject("stats")
+    p1 = h1.GetListOfFunctions().FindObject('stats')
     p1.SetX1NDC(x1)
     p1.SetY1NDC(y1)
     p1.SetX2NDC(x2)
