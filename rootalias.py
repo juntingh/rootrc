@@ -242,3 +242,11 @@ def get_graph_from_hist(h1):
         y_errs.append((h1.GetBinContent(i))**0.5)
 
     return TGraphErrors(len(xs), np.array(xs), np.array(ys), np.array(x_errs), np.array(y_errs))
+
+
+def get_graph_shade(gr1, gr2):
+    xs = list(gr1.GetX())
+    ys = list(gr1.GetY())
+    xs.extend(reversed(list(gr2.GetX())))
+    ys.extend(reversed(list(gr2.GetY())))
+    return TGraph(len(xs), np.array(xs), np.array(ys))
