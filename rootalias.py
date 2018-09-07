@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack
+from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse
 import numpy as np
 
 
@@ -104,6 +104,7 @@ def set_h2_color_style():
     blues = np.array([0.51, 1.00, 0.12, 0.00, 0.00])
     TColor.CreateGradientColorTable(n_rgb, stops, reds, greens, blues, n_contour)
     gStyle.SetNumberContours(n_contour)
+    gPad.SetRightMargin(0.2)
 
 
 def set_margin():
