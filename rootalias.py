@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TTimeStamp, TDatime
+from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TTimeStamp, TDatime, TSpectrum
 import numpy as np
 
 
@@ -123,9 +123,9 @@ def get_max_y(h1s):
 
 def draw_statbox(h1, **kwargs):
     x1 = kwargs.get('x1', 0.72)
-    x2 = kwargs.get('x2', 0.95)
+    x2 = kwargs.get('x2', 0.98)
     y1 = kwargs.get('y1', 0.75)
-    y2 = kwargs.get('y2', 0.95)
+    y2 = kwargs.get('y2', 0.935)
 
     p1 = h1.GetListOfFunctions().FindObject('stats')
     p1.SetX1NDC(x1)
