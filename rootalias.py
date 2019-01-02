@@ -122,6 +122,7 @@ def get_max_y(h1s):
 
 
 def draw_statbox(h1, **kwargs):
+    # use c1.Update() beforehand
     x1 = kwargs.get('x1', 0.72)
     x2 = kwargs.get('x2', 0.98)
     y1 = kwargs.get('y1', 0.75)
