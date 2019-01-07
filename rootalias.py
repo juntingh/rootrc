@@ -136,71 +136,70 @@ def draw_statbox(h1, **kwargs):
     p1.Draw()
 
 
-def draw_statboxes(h1, h2, **kwargs):
-    position = kwargs.get('position', 'right')
-    if position not in ['left', 'right', 'top']:
-        raise Exception('The provided position option {} does not exist.'.format(position))
+# def draw_statboxes(h1, h2, **kwargs):
+#     position = kwargs.get('position', 'right')
+#     if position not in ['left', 'right', 'top']:
+#         raise Exception('The provided position option {} does not exist.'.format(position))
 
-    width = 0.23
-    height = 0.2
-    corner_x = 0.63
-    corner_y = 0.42
-    gap_y = 0.04
-    gap_x = 0.04
-    if position == 'left':
-        corner_x = 0.2
-    elif position == 'top':
-        corner_x = 0.19
-        corner_y = 0.66
+#     width = 0.23
+#     height = 0.2
+#     corner_x = 0.63
+#     corner_y = 0.42
+#     gap_y = 0.04
+#     gap_x = 0.04
+#     if position == 'left':
+#         corner_x = 0.2
+#     elif position == 'top':
+#         corner_x = 0.19
+#         corner_y = 0.66
 
-    ndcs_1 = [
-        corner_x,
-        corner_y,
-        corner_x + width,
-        corner_y + height
-    ]
-    ndcs_2 = [
-        corner_x,
-        corner_y + height + gap_y,
-        corner_x + width,
-        corner_y + height + gap_y + height
-    ]
-    if position == 'top':
-        ndcs_2 = [
-            corner_x + width + gap_x,
-            corner_y,
-            corner_x + width + gap_x + width,
-            corner_y + height
-        ]
+#     ndcs_1 = [
+#         corner_x,
+#         corner_y,
+#         corner_x + width,
+#         corner_y + height
+#     ]
+#     ndcs_2 = [
+#         corner_x,
+#         corner_y + height + gap_y,
+#         corner_x + width,
+#         corner_y + height + gap_y + height
+#     ]
+#     if position == 'top':
+#         ndcs_2 = [
+#             corner_x + width + gap_x,
+#             corner_y,
+#             corner_x + width + gap_x + width,
+#             corner_y + height
+#         ]
 
-    p1 = h1.GetListOfFunctions().FindObject("stats")
-    p1.SetTextColor(h1.GetLineColor())
-    p1.SetLineColor(h1.GetLineColor())
-    p1.SetX1NDC(ndcs_1[0])
-    p1.SetY1NDC(ndcs_1[1])
-    p1.SetX2NDC(ndcs_1[2])
-    p1.SetY2NDC(ndcs_1[3])
-    p1.Draw()
+#     p1 = h1.GetListOfFunctions().FindObject("stats")
+#     p1.SetTextColor(h1.GetLineColor())
+#     p1.SetLineColor(h1.GetLineColor())
+#     p1.SetX1NDC(ndcs_1[0])
+#     p1.SetY1NDC(ndcs_1[1])
+#     p1.SetX2NDC(ndcs_1[2])
+#     p1.SetY2NDC(ndcs_1[3])
+#     p1.Draw()
 
-    p2 = h2.GetListOfFunctions().FindObject("stats")
-    p2.SetTextColor(h2.GetLineColor())
-    p2.SetLineColor(h2.GetLineColor())
-    p2.SetX1NDC(ndcs_2[0])
-    p2.SetY1NDC(ndcs_2[1])
-    p2.SetX2NDC(ndcs_2[2])
-    p2.SetY2NDC(ndcs_2[3])
-    p2.Draw()
+#     p2 = h2.GetListOfFunctions().FindObject("stats")
+#     p2.SetTextColor(h2.GetLineColor())
+#     p2.SetLineColor(h2.GetLineColor())
+#     p2.SetX1NDC(ndcs_2[0])
+#     p2.SetY1NDC(ndcs_2[1])
+#     p2.SetX2NDC(ndcs_2[2])
+#     p2.SetY2NDC(ndcs_2[3])
+#     p2.Draw()
 
 
-def draw_statboxess(h1, h2, h3):
-    width = 0.23
-    height = 0.2
-    corner_x = 0.72
-    corner_y = 0.27
-    gap_y = 0.04
+def draw_statboxes(hs, **kwargs):
+    width = kwargs.get('width', 0.23)
+    height = kwargs.get('height', 0.2)
+    corner_x = kwargs.get('corner_x', 0.72)
+    corner_y = kwargs.get('corner_y', 0.27)
+    gap_y = kwargs.get('gap_y', 0.04)
     delta_y = height + gap_y
 
-    hs = [h1, h2, h3]
     for i, h in enumerate(hs):
         p = h.GetListOfFunctions().FindObject("stats")
         p.SetTextColor(h.GetLineColor())
@@ -212,24 +211,24 @@ def draw_statboxess(h1, h2, h3):
         p.Draw()
 
 
-def draw_statboxesss(h1, h2, h3, h4):
-    width = 0.18
-    height = 0.15
-    corner_x = 0.76
-    corner_y = 0.24
-    gap_y = 0.04
-    delta_y = height + gap_y
+# def draw_statboxesss(h1, h2, h3, h4):
+#     width = 0.18
+#     height = 0.15
+#     corner_x = 0.76
+#     corner_y = 0.24
+#     gap_y = 0.04
+#     delta_y = height + gap_y
 
-    hs = [h1, h2, h3, h4]
-    for i, h in enumerate(hs):
-        p = h.GetListOfFunctions().FindObject("stats")
-        p.SetTextColor(h.GetLineColor())
-        p.SetLineColor(h.GetLineColor())
-        p.SetX1NDC(corner_x)
-        p.SetY1NDC(corner_y + delta_y * i)
-        p.SetX2NDC(corner_x + width)
-        p.SetY2NDC(corner_y + height + delta_y * i)
-        p.Draw()
+#     hs = [h1, h2, h3, h4]
+#     for i, h in enumerate(hs):
+#         p = h.GetListOfFunctions().FindObject("stats")
+#         p.SetTextColor(h.GetLineColor())
+#         p.SetLineColor(h.GetLineColor())
+#         p.SetX1NDC(corner_x)
+#         p.SetY1NDC(corner_y + delta_y * i)
+#         p.SetX2NDC(corner_x + width)
+#         p.SetY2NDC(corner_y + height + delta_y * i)
+#         p.Draw()
 
 
 def get_graph_from_hist(h1):
