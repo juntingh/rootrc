@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker
+from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager
 import numpy as np
 
 
@@ -34,18 +34,18 @@ def set_graph_style(gr):
     gr.SetMarkerStyle(24)
     gr.SetMarkerSize(1.2)
     gr.SetMarkerColor(kBlack)
-    gr.GetYaxis().SetTitleOffset(1.2)
-    gr.GetXaxis().SetTitleOffset(1.2)
-    gr.GetXaxis().CenterTitle()
-    gr.GetYaxis().CenterTitle()
-    gr.GetXaxis().SetTitleFont(43)
-    gr.GetYaxis().SetTitleFont(43)
-    gr.GetXaxis().SetLabelFont(43)
-    gr.GetYaxis().SetLabelFont(43)
-    gr.GetXaxis().SetLabelSize(28)
-    gr.GetYaxis().SetLabelSize(28)
-    gr.GetXaxis().SetTitleSize(28)
-    gr.GetYaxis().SetTitleSize(28)
+
+    axiss = [gr.GetXaxis(), gr.GetYaxis()]
+    if type(gr) == TGraph2D:
+        axiss = [gr.GetXaxis(), gr.GetYaxis(), gr.GetZaxis()]
+
+    for axis in axiss:
+        axis.SetTitleOffset(1.2)
+        axis.CenterTitle()
+        axis.SetTitleFont(43)
+        axis.SetLabelFont(43)
+        axis.SetLabelSize(28)
+        axis.SetTitleSize(28)
     # gr.GetYaxis().SetDecimals()
     gr.SetLineWidth(2)
     gr.SetTitle('')
@@ -71,6 +71,7 @@ def set_h1_style(h1):
 
 
 def set_h2_style(h2):
+    gPad.SetRightMargin(0.2)
     h2.GetYaxis().SetTitleOffset(1.1)
     h2.GetXaxis().SetTitleOffset(1.05)
     h2.GetZaxis().SetTitleOffset(1.2)
