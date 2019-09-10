@@ -46,8 +46,8 @@ def set_graph_style(gr):
         axis.SetLabelFont(43)
         axis.SetLabelSize(28)
         axis.SetTitleSize(28)
-    # gr.GetYaxis().SetDecimals()
-    # gr.GetYaxis().SetMaxDigits(3)
+    # gr.GetYaxis().SetDecimals() # same label width
+    # gr.GetYaxis().SetMaxDigits(3) # changes power of 10
     gr.SetLineWidth(2)
     gr.SetTitle('')
 
