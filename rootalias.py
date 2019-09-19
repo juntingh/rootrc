@@ -3,6 +3,9 @@ from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, T
 import numpy as np
 
 
+COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 1, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 5]
+
+
 def set_rooplot_style(frame):
     frame.SetMarkerStyle(24)
     frame.SetMarkerSize(1.2)
