@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager
+from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager
 import numpy as np
 
 
@@ -26,6 +26,7 @@ def set_rooplot_style(frame):
 
 
 def set_legend_style(lg):
+    # lg.SetNColumns(2)
     lg.SetTextFont(43)
     lg.SetTextSize(28)
     lg.SetFillStyle(0)
