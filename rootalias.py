@@ -258,3 +258,7 @@ def get_graph_shade(gr1, gr2):
     xs.extend(reversed(list(gr2.GetX())))
     ys.extend(reversed(list(gr2.GetY())))
     return TGraph(len(xs), np.array(xs), np.array(ys))
+
+
+# gPad.Update()
+# tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
