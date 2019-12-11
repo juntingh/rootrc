@@ -260,5 +260,12 @@ def get_graph_shade(gr1, gr2):
     return TGraph(len(xs), np.array(xs), np.array(ys))
 
 
+def set_time_display(gr):
+    gr.GetXaxis().SetTimeFormat('#splitline{%m/%d}{%Y} %F 1970-01-01 00:00:00')
+    gr.GetXaxis().SetTimeDisplay(1)
+    gr.GetYaxis().SetTitleOffset(1.5)
+    gr.GetXaxis().SetLabelOffset(0.05)
+
+
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
