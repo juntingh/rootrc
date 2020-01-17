@@ -32,6 +32,7 @@ def set_legend_style(lg):
     lg.SetFillStyle(0)
     lg.SetMargin(0.4)
     lg.SetBorderSize(0)
+    # lg1.SetFillStyle(1001) # solid
 
 
 def set_graph_style(gr):
