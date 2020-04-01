@@ -200,6 +200,7 @@ def draw_statbox(h1, **kwargs):
 
 
 def draw_statboxes(hs, **kwargs):
+    corner_y_at_top = kwargs.get('corner_y_at_top', False)
     width = kwargs.get('width', 0.23)
     height = kwargs.get('height', 0.2)
     corner_x = kwargs.get('corner_x', 0.72)
@@ -212,9 +213,13 @@ def draw_statboxes(hs, **kwargs):
         p.SetTextColor(h.GetLineColor())
         p.SetLineColor(h.GetLineColor())
         p.SetX1NDC(corner_x)
-        p.SetY1NDC(corner_y + delta_y * i)
         p.SetX2NDC(corner_x + width)
-        p.SetY2NDC(corner_y + height + delta_y * i)
+        if not corner_y_at_top:
+            p.SetY1NDC(corner_y + delta_y * i)
+            p.SetY2NDC(corner_y + height + delta_y * i)
+        else:
+            p.SetY1NDC(corner_y - delta_y * i)
+            p.SetY2NDC(corner_y - height - delta_y * i)
         p.Draw()
 
 
