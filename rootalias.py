@@ -1,9 +1,9 @@
 import ROOT
-from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom
+from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom
 import numpy as np
 
 
-COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 1, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 5]
+COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 5]
 
 
 def set_rooplot_style(frame):
@@ -200,6 +200,7 @@ def draw_statbox(h1, **kwargs):
 
 
 def draw_statboxes(hs, **kwargs):
+    corner_y_at_top = kwargs.get('corner_y_at_top', False)
     width = kwargs.get('width', 0.23)
     height = kwargs.get('height', 0.2)
     corner_x = kwargs.get('corner_x', 0.72)
@@ -212,9 +213,13 @@ def draw_statboxes(hs, **kwargs):
         p.SetTextColor(h.GetLineColor())
         p.SetLineColor(h.GetLineColor())
         p.SetX1NDC(corner_x)
-        p.SetY1NDC(corner_y + delta_y * i)
         p.SetX2NDC(corner_x + width)
-        p.SetY2NDC(corner_y + height + delta_y * i)
+        if not corner_y_at_top:
+            p.SetY1NDC(corner_y + delta_y * i)
+            p.SetY2NDC(corner_y + height + delta_y * i)
+        else:
+            p.SetY1NDC(corner_y - delta_y * i)
+            p.SetY2NDC(corner_y - height - delta_y * i)
         p.Draw()
 
 
@@ -277,9 +282,21 @@ def get_residual(h1, f1, x_min, x_max):
     return TGraph(len(xs), np.array(xs), np.array(diffs))
 
 
+def get_gr_values_list(gr, **kwargs):
+    axis = kwargs.get('axis', 'x')
+    values = None
+    if axis == 'x':
+        values = gr.GetX()
+    else:
+        values = gr.GetY()
+    values.SetSize(gr.GetN())
+    return list(values)
+
+
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
 
+# datetime.utcfromtimestamp(ts)
 # datetime.timestamp(datetime.strptime('2018/05/25', '%Y/%m/%d'))
 # date.strftime('%Y/%m/%d')
 
