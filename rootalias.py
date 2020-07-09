@@ -207,25 +207,30 @@ def draw_statbox(h1, **kwargs):
 
 def draw_statboxes(hs, **kwargs):
     corner_y_at_top = kwargs.get('corner_y_at_top', False)
+    column_count = kwargs.get('column_count', 1)
+
     width = kwargs.get('width', 0.23)
     height = kwargs.get('height', 0.2)
     corner_x = kwargs.get('corner_x', 0.72)
     corner_y = kwargs.get('corner_y', 0.27)
+    gap_x = kwargs.get('gap_x', 0.04)
     gap_y = kwargs.get('gap_y', 0.04)
     delta_y = height + gap_y
+    delta_x = width + gap_x
 
     for i, h in enumerate(hs):
         p = h.GetListOfFunctions().FindObject("stats")
         p.SetTextColor(h.GetLineColor())
         p.SetLineColor(h.GetLineColor())
-        p.SetX1NDC(corner_x)
-        p.SetX2NDC(corner_x + width)
+        p.SetX1NDC(corner_x + delta_x * (i % column_count))
+        p.SetX2NDC(corner_x + width + delta_x * (i % column_count))
         if not corner_y_at_top:
-            p.SetY1NDC(corner_y + delta_y * i)
-            p.SetY2NDC(corner_y + height + delta_y * i)
+            p.SetY1NDC(corner_y + delta_y * int(i / column_count))
+            p.SetY2NDC(corner_y + height + delta_y * int(i / column_count))
         else:
-            p.SetY1NDC(corner_y - delta_y * i)
-            p.SetY2NDC(corner_y - height - delta_y * i)
+            p.SetY1NDC(corner_y - delta_y * int(i / column_count))
+            p.SetY2NDC(corner_y - height - delta_y * int(i / column_count))
+
         p.Draw()
 
 
@@ -316,7 +321,8 @@ def get_gr_values_list(gr, **kwargs):
 
 # h1.SetStats(0)
 
-# datetime.utcfromtimestamp(ts)
+# datetime.utcfromtimestamp(ts) in utc
+# datetime.fromtimestamp(ts) in local time
 # datetime.timestamp(datetime.strptime('2018/05/25', '%Y/%m/%d'))
 # date.strftime('%Y/%m/%d')
 
