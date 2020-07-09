@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager
+from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom
 import numpy as np
 
 
@@ -278,6 +278,15 @@ def set_time_display(gr):
     gr.GetXaxis().SetLabelOffset(0.05)
 
 
+def get_residual(h1, f1, x_min, x_max):
+    xs = []
+    diffs = []
+    for i in range(h1.FindBin(x_min), h1.FindBin(x_max) + 1):
+        diffs.append(h1.GetBinContent(i) - f1.Eval(h1.GetBinCenter(i)))
+        xs.append(h1.GetBinCenter(i))
+    return TGraph(len(xs), np.array(xs), np.array(diffs))
+
+
 def get_gr_values_list(gr, **kwargs):
     axis = kwargs.get('axis', 'x')
     values = None
@@ -294,3 +303,9 @@ def get_gr_values_list(gr, **kwargs):
 
 # datetime.utcfromtimestamp(ts) in utc
 # datetime.fromtimestamp(ts) in local time
+# datetime.timestamp(datetime.strptime('2018/05/25', '%Y/%m/%d'))
+# date.strftime('%Y/%m/%d')
+
+# keys = [key.GetName() for key in tf.GetListOfKeys()]
+# for key in tf.GetListOfKeys():
+#     names.append(key.GetName())
