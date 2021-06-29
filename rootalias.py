@@ -104,7 +104,7 @@ def set_h2_style(h2):
     h2.GetZaxis().SetTitleSize(28)
     h2.GetYaxis().SetNdivisions(505, 1)
     h2.GetXaxis().SetNdivisions(505, 1)
-    h2.GetZaxis().SetNdivisions(505, 1)
+    h2.GetZaxis().SetNdivisions(510, 1)
     h2.SetTitle('')
 
 
