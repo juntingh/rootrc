@@ -25,17 +25,21 @@ def set_rooplot_style(frame):
     frame.SetTitle('')
 
 
-def set_legend_style(lg):
+def set_legend_style(lg, **kwargs):
+    text_size = kwargs.get('text_size', 28)
+
     # lg.SetNColumns(2)
     lg.SetTextFont(43)
-    lg.SetTextSize(28)
+    lg.SetTextSize(text_size)
     lg.SetFillStyle(0)
     lg.SetMargin(0.4)
     lg.SetBorderSize(0)
     # lg1.SetFillStyle(1001) # solid
 
 
-def set_graph_style(gr):
+def set_graph_style(gr, **kwargs):
+    label_title_size = kwargs.get('label_title_size', 28)
+
     gr.SetMarkerStyle(24)
     gr.SetMarkerSize(1.2)
     gr.SetMarkerColor(kBlack)
@@ -49,15 +53,17 @@ def set_graph_style(gr):
         axis.CenterTitle()
         axis.SetTitleFont(43)
         axis.SetLabelFont(43)
-        axis.SetLabelSize(28)
-        axis.SetTitleSize(28)
+        axis.SetLabelSize(label_title_size)
+        axis.SetTitleSize(label_title_size)
     # gr.GetYaxis().SetDecimals() # same label width
     # gr.GetYaxis().SetMaxDigits(3) # changes power of 10
     gr.SetLineWidth(2)
     gr.SetTitle('')
 
 
-def set_h1_style(h1):
+def set_h1_style(h1, **kwargs):
+    label_title_size = kwargs.get('label_title_size', 28)
+
     h1.GetYaxis().SetTitleOffset(1.3)
     h1.GetXaxis().SetTitleOffset(1.2)
     h1.GetXaxis().CenterTitle()
@@ -66,10 +72,10 @@ def set_h1_style(h1):
     h1.GetYaxis().SetTitleFont(43)
     h1.GetXaxis().SetLabelFont(43)
     h1.GetYaxis().SetLabelFont(43)
-    h1.GetXaxis().SetLabelSize(28)
-    h1.GetYaxis().SetLabelSize(28)
-    h1.GetXaxis().SetTitleSize(28)
-    h1.GetYaxis().SetTitleSize(28)
+    h1.GetXaxis().SetLabelSize(label_title_size)
+    h1.GetYaxis().SetLabelSize(label_title_size)
+    h1.GetXaxis().SetTitleSize(label_title_size)
+    h1.GetYaxis().SetTitleSize(label_title_size)
     h1.GetYaxis().SetNdivisions(505, 1)
     h1.GetXaxis().SetNdivisions(505, 1)
     h1.SetLineWidth(2)
@@ -98,7 +104,7 @@ def set_h2_style(h2):
     h2.GetZaxis().SetTitleSize(28)
     h2.GetYaxis().SetNdivisions(505, 1)
     h2.GetXaxis().SetNdivisions(505, 1)
-    h2.GetZaxis().SetNdivisions(505, 1)
+    h2.GetZaxis().SetNdivisions(510, 1)
     h2.SetTitle('')
 
 
@@ -290,16 +296,30 @@ def get_residual(h1, f1, x_min, x_max):
 def get_gr_values_list(gr, **kwargs):
     axis = kwargs.get('axis', 'x')
     values = None
+    errs = None
     if axis == 'x':
         values = gr.GetX()
+        errs = gr.GetEX()
     else:
         values = gr.GetY()
+        errs = gr.GetEY()
     values.SetSize(gr.GetN())
-    return list(values)
+    errs.SetSize(gr.GetN())
+    return list(values), list(errs)
 
 
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
+# gPad.SetLogy()
+# tl = TLine(energy_sep, 10**gPad.GetUymin(), energy_sep, 10**gPad.GetUymax())
+
+# gr.SetLineColor(COLORS[i % len(COLORS)])
+# gr.SetMarkerColor(COLORS[i % len(COLORS)])
+
+# f1 = h1.GetListOfFunctions().At(0)
+# f1.SetLineColor(kRed)
+
+# h1.SetStats(0)
 
 # datetime.utcfromtimestamp(ts) in utc
 # datetime.fromtimestamp(ts) in local time
@@ -311,3 +331,10 @@ def get_gr_values_list(gr, **kwargs):
 #     names.append(key.GetName())
 
 # h1.SetStats()
+
+# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+#     pass
+
+# a = ROOT.Double(0)
+# b = ROOT.Double(0)
+# f1.GetParLimits(4, a, b)
