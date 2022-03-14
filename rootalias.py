@@ -76,8 +76,8 @@ def set_h1_style(h1, **kwargs):
     h1.GetYaxis().SetLabelSize(label_title_size)
     h1.GetXaxis().SetTitleSize(label_title_size)
     h1.GetYaxis().SetTitleSize(label_title_size)
-    h1.GetYaxis().SetNdivisions(505, 1)
-    h1.GetXaxis().SetNdivisions(505, 1)
+    h1.GetYaxis().SetNdivisions(510, 1)
+    h1.GetXaxis().SetNdivisions(510, 1)
     h1.SetLineWidth(2)
     h1.SetTitle('')
 
