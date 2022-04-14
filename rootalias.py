@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TH1D, TH2D, TH3D, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom
+from ROOT import TH1D, TH2D, TH3D, TH1I, TH2I, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom, TMatrix
 import numpy as np
 
 
@@ -102,8 +102,8 @@ def set_h2_style(h2):
     h2.GetXaxis().SetTitleSize(28)
     h2.GetYaxis().SetTitleSize(28)
     h2.GetZaxis().SetTitleSize(28)
-    h2.GetYaxis().SetNdivisions(505, 1)
-    h2.GetXaxis().SetNdivisions(505, 1)
+    h2.GetYaxis().SetNdivisions(510, 1)
+    h2.GetXaxis().SetNdivisions(510, 1)
     h2.GetZaxis().SetNdivisions(510, 1)
     h2.SetTitle('')
 
@@ -131,6 +131,15 @@ def get_max_y(h1s):
         h1_maximum = h1.GetMaximum()
         if h1_maximum > max_y:
             max_y = h1_maximum
+    return max_y
+
+
+def get_max_y_graphs(grs):
+    max_y = 0.
+    for gr in grs:
+        max_y_gr = max(list(gr.GetY()))
+        if max_y_gr > max_y:
+            max_y = max_y_gr
     return max_y
 
 
@@ -330,11 +339,11 @@ def get_gr_values_list(gr, **kwargs):
 # for key in tf.GetListOfKeys():
 #     names.append(key.GetName())
 
-# h1.SetStats()
-
 # with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 #     pass
 
 # a = ROOT.Double(0)
 # b = ROOT.Double(0)
 # f1.GetParLimits(4, a, b)
+
+# f1.SetNpx(1000)
