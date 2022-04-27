@@ -347,3 +347,8 @@ def get_gr_values_list(gr, **kwargs):
 # f1.GetParLimits(4, a, b)
 
 # f1.SetNpx(1000)
+
+# read from multiple trees of the same size
+# for i in range(tree1.GetEntries()):
+#     tree1.GetEvent(i)
+#     tree2.GetEvent(i)
