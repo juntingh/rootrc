@@ -82,6 +82,26 @@ def set_h1_style(h1, **kwargs):
     h1.SetTitle('')
 
 
+def set_hstack_style(h1, **kwargs):
+    label_title_size = kwargs.get('label_title_size', 28)
+
+    h1.GetYaxis().SetTitleOffset(1.3)
+    h1.GetXaxis().SetTitleOffset(1.2)
+    h1.GetXaxis().CenterTitle()
+    h1.GetYaxis().CenterTitle()
+    h1.GetXaxis().SetTitleFont(43)
+    h1.GetYaxis().SetTitleFont(43)
+    h1.GetXaxis().SetLabelFont(43)
+    h1.GetYaxis().SetLabelFont(43)
+    h1.GetXaxis().SetLabelSize(label_title_size)
+    h1.GetYaxis().SetLabelSize(label_title_size)
+    h1.GetXaxis().SetTitleSize(label_title_size)
+    h1.GetYaxis().SetTitleSize(label_title_size)
+    h1.GetYaxis().SetNdivisions(510, 1)
+    h1.GetXaxis().SetNdivisions(510, 1)
+    h1.SetTitle('')
+
+
 def set_h2_style(h2):
     gPad.SetRightMargin(0.2)
     h2.GetYaxis().SetTitleOffset(1.1)
@@ -352,3 +372,9 @@ def get_gr_values_list(gr, **kwargs):
 # for i in range(tree1.GetEntries()):
 #     tree1.GetEvent(i)
 #     tree2.GetEvent(i)
+
+# detach from root file
+# h1.SetDirectory(0)
+
+# uneven bin width
+# h_bin = TH1D('h_bin', 'h_bin', len(heights) - 1, array('d', heights))
