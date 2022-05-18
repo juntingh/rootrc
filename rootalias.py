@@ -3,7 +3,7 @@ from ROOT import TH1D, TH2D, TH3D, TH1I, TH2I, TCanvas, gPad, TLegend, gStyle, T
 import numpy as np
 
 
-COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 5]
+COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 3]
 
 
 def set_rooplot_style(frame):
@@ -103,7 +103,7 @@ def set_hstack_style(h1, **kwargs):
 
 
 def set_h2_style(h2):
-    gPad.SetRightMargin(0.2)
+    # gPad.SetRightMargin(0.2)
     h2.GetYaxis().SetTitleOffset(1.1)
     h2.GetXaxis().SetTitleOffset(1.05)
     h2.GetZaxis().SetTitleOffset(1.2)
@@ -137,7 +137,7 @@ def set_h2_color_style():
     blues = np.array([0.51, 1.00, 0.12, 0.00, 0.00])
     TColor.CreateGradientColorTable(n_rgb, stops, reds, greens, blues, n_contour)
     gStyle.SetNumberContours(n_contour)
-    gPad.SetRightMargin(0.2)
+    # gPad.SetRightMargin(0.2)
 
 
 def set_margin():
@@ -337,6 +337,34 @@ def get_gr_values_list(gr, **kwargs):
     return list(values), list(errs)
 
 
+def get_h1_values_list(h1):
+    """
+    Get bin contents of TH1 or TProfile as a list.
+    """
+
+    ys = []
+    for i in range(1, h1.GetNbinsX() + 1):
+        ys.append(h1.GetBinContent(i))
+
+    return ys
+
+
+def get_tspectrum_peaks(h1, sigma, threshold):
+    """
+    Get peaks using TSpectrum.
+    """
+
+    sp = TSpectrum()
+    sp.Search(h1, sigma, '', threshold)
+    xs, ys = sp.GetPositionX(), sp.GetPositionY()
+    peaks = []
+    for i in range(sp.GetNPeaks()):
+        peaks.append([xs[i], ys[i]])
+    peaks.sort()
+
+    return peaks
+
+
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
 # gPad.SetLogy()
@@ -377,4 +405,5 @@ def get_gr_values_list(gr, **kwargs):
 # h1.SetDirectory(0)
 
 # uneven bin width
+# heights is a list of int as bin edges
 # h_bin = TH1D('h_bin', 'h_bin', len(heights) - 1, array('d', heights))
