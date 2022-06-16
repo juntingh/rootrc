@@ -28,13 +28,14 @@ def set_rooplot_style(frame):
 def set_legend_style(lg, **kwargs):
     text_size = kwargs.get('text_size', 28)
 
-    # lg.SetNColumns(2)
     lg.SetTextFont(43)
     lg.SetTextSize(text_size)
     lg.SetFillStyle(0)
     lg.SetMargin(0.4)
     lg.SetBorderSize(0)
-    # lg1.SetFillStyle(1001) # solid
+    # lg.SetNColumns(2)
+    # lg.SetHeader('text')
+    # lg.SetFillStyle(1001) # solid
 
 
 def set_graph_style(gr, **kwargs):
@@ -152,6 +153,15 @@ def get_max_y(h1s):
         if h1_maximum > max_y:
             max_y = h1_maximum
     return max_y
+
+
+def get_min_y(h1s):
+    min_y = float('inf')
+    for h1 in h1s:
+        h1_min = h1.GetMinimum()
+        if h1_min < min_y:
+            min_y = h1_min
+    return min_y
 
 
 def get_max_y_graphs(grs):
