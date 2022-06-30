@@ -3,7 +3,7 @@ from ROOT import TH1D, TH2D, TH3D, TH1I, TH2I, TCanvas, gPad, TLegend, gStyle, T
 import numpy as np
 
 
-COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 5]
+COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 3]
 
 
 def set_rooplot_style(frame):
@@ -28,13 +28,14 @@ def set_rooplot_style(frame):
 def set_legend_style(lg, **kwargs):
     text_size = kwargs.get('text_size', 28)
 
-    # lg.SetNColumns(2)
     lg.SetTextFont(43)
     lg.SetTextSize(text_size)
     lg.SetFillStyle(0)
     lg.SetMargin(0.4)
     lg.SetBorderSize(0)
-    # lg1.SetFillStyle(1001) # solid
+    # lg.SetNColumns(2)
+    # lg.SetHeader('text')
+    # lg.SetFillStyle(1001) # solid
 
 
 def set_graph_style(gr, **kwargs):
@@ -82,8 +83,28 @@ def set_h1_style(h1, **kwargs):
     h1.SetTitle('')
 
 
+def set_hstack_style(h1, **kwargs):
+    label_title_size = kwargs.get('label_title_size', 28)
+
+    h1.GetYaxis().SetTitleOffset(1.3)
+    h1.GetXaxis().SetTitleOffset(1.2)
+    h1.GetXaxis().CenterTitle()
+    h1.GetYaxis().CenterTitle()
+    h1.GetXaxis().SetTitleFont(43)
+    h1.GetYaxis().SetTitleFont(43)
+    h1.GetXaxis().SetLabelFont(43)
+    h1.GetYaxis().SetLabelFont(43)
+    h1.GetXaxis().SetLabelSize(label_title_size)
+    h1.GetYaxis().SetLabelSize(label_title_size)
+    h1.GetXaxis().SetTitleSize(label_title_size)
+    h1.GetYaxis().SetTitleSize(label_title_size)
+    h1.GetYaxis().SetNdivisions(510, 1)
+    h1.GetXaxis().SetNdivisions(510, 1)
+    h1.SetTitle('')
+
+
 def set_h2_style(h2):
-    gPad.SetRightMargin(0.2)
+    # gPad.SetRightMargin(0.2)
     h2.GetYaxis().SetTitleOffset(1.1)
     h2.GetXaxis().SetTitleOffset(1.05)
     h2.GetZaxis().SetTitleOffset(1.2)
@@ -117,7 +138,7 @@ def set_h2_color_style():
     blues = np.array([0.51, 1.00, 0.12, 0.00, 0.00])
     TColor.CreateGradientColorTable(n_rgb, stops, reds, greens, blues, n_contour)
     gStyle.SetNumberContours(n_contour)
-    gPad.SetRightMargin(0.2)
+    # gPad.SetRightMargin(0.2)
 
 
 def set_margin():
@@ -132,6 +153,15 @@ def get_max_y(h1s):
         if h1_maximum > max_y:
             max_y = h1_maximum
     return max_y
+
+
+def get_min_y(h1s):
+    min_y = float('inf')
+    for h1 in h1s:
+        h1_min = h1.GetMinimum()
+        if h1_min < min_y:
+            min_y = h1_min
+    return min_y
 
 
 def get_max_y_graphs(grs):
@@ -317,6 +347,34 @@ def get_gr_values_list(gr, **kwargs):
     return list(values), list(errs)
 
 
+def get_h1_values_list(h1):
+    """
+    Get bin contents of TH1 or TProfile as a list.
+    """
+
+    ys = []
+    for i in range(1, h1.GetNbinsX() + 1):
+        ys.append(h1.GetBinContent(i))
+
+    return ys
+
+
+def get_tspectrum_peaks(h1, sigma, threshold):
+    """
+    Get peaks using TSpectrum.
+    """
+
+    sp = TSpectrum()
+    sp.Search(h1, sigma, '', threshold)
+    xs, ys = sp.GetPositionX(), sp.GetPositionY()
+    peaks = []
+    for i in range(sp.GetNPeaks()):
+        peaks.append([xs[i], ys[i]])
+    peaks.sort()
+
+    return peaks
+
+
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
 # gPad.SetLogy()
@@ -355,3 +413,15 @@ def get_gr_values_list(gr, **kwargs):
 # h_timing = tf.Get('h_pdf')
 # h_timing.SetDirectory(0)
 # tf.Close()
+
+# read from multiple trees of the same size
+# for i in range(tree1.GetEntries()):
+#     tree1.GetEvent(i)
+#     tree2.GetEvent(i)
+
+# detach from root file
+# h1.SetDirectory(0)
+
+# uneven bin width
+# heights is a list of int as bin edges
+# h_bin = TH1D('h_bin', 'h_bin', len(heights) - 1, array('d', heights))
