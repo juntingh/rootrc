@@ -328,6 +328,7 @@ def get_gr_values_list(gr, **kwargs):
 # f1 = h1.GetListOfFunctions().At(0)
 # f1.SetLineColor(kRed)
 
+# do not draw statbox
 # h1.SetStats(0)
 
 # datetime.utcfromtimestamp(ts) in utc
@@ -346,4 +347,11 @@ def get_gr_values_list(gr, **kwargs):
 # b = ROOT.Double(0)
 # f1.GetParLimits(4, a, b)
 
+# more points for TF1
 # f1.SetNpx(1000)
+
+# close root file after reading the content
+# tf = TFile('reco/data/save_timing_pdf.cs137.root')
+# h_timing = tf.Get('h_pdf')
+# h_timing.SetDirectory(0)
+# tf.Close()
