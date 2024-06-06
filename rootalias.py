@@ -173,6 +173,15 @@ def get_max_y_graphs(grs):
     return max_y
 
 
+def get_min_y_graphs(grs):
+    min_y = math.inf
+    for gr in grs:
+        min_y_gr = min(list(gr.GetY()))
+        if min_y_gr < min_y:
+            min_y = min_y_gr
+    return min_y
+
+
 def draw_statbox(h1, **kwargs):
     # use c1.Update() beforehand
     x1 = kwargs.get('x1', 0.72)
