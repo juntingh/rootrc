@@ -464,6 +464,17 @@ def get_last_nonzero_bin(h1):
     return -1
 
 
+def get_gr_ratio(gr_1, gr_2):
+    x1s, y1s = gr_1.GetX(), gr_1.GetY()
+    x2s, y2s = gr_2.GetX(), gr_2.GetY()
+    assert x1s == x2s, 'x values of two graphs are not equal'
+
+    ratios = []
+    for i in range(len(x1s)):
+        ratios.append(y1s[i] / y2s[i])
+    return TGraph(len(x1s), np.array(x1s), np.array(ratios))
+
+
 # gPad.Update()
 # tl = TLine(gPad.GetUxmin(), gPad.GetUymin(), gPad.GetUxmax(), gPad.GetUymax())
 # gPad.SetLogy()
