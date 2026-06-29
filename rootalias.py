@@ -1,6 +1,9 @@
+import ctypes
 import ROOT
-from ROOT import TH1D, TH2D, TH3D, TH1I, TH2I, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TDatabasePDG, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TGeoManager, TRandom, TMatrix
+from ROOT import TH1D, TH2D, TH3D, TH1I, TH2I, TCanvas, gPad, TLegend, gStyle, TGraph2D, TGraph, TGraphErrors, kWhite, kBlack, kGray, kRed, kBlue, kGreen, kOrange, kMagenta, kViolet, kAzure, kCyan, kTeal, kYellow, kSpring, kPink, TColor, TPaveStats, TFile, TF1, TPad, TLatex, TLine, TArrow, gROOT, gSystem, TChain, kTRUE, kFALSE, TGaxis, TMarker, gDirectory, THStack, TEllipse, TBox, TTimeStamp, TDatime, TSpectrum, TList, TPolyMarker, TPolyMarker3D, TNtuple, TRandom, TMatrix, TArc, TMath
+# from ROOT import TDatabasePDG, TGeoManager
 import numpy as np
+import math
 
 
 COLORS = [kBlack, kBlue, kRed + 1, kMagenta + 2, kGreen + 2, kOrange + 1, kYellow + 2, kPink, kViolet, kAzure + 4, kCyan + 1, kTeal - 7, kBlue - 3]
@@ -31,11 +34,11 @@ def set_legend_style(lg, **kwargs):
     lg.SetTextFont(43)
     lg.SetTextSize(text_size)
     lg.SetFillStyle(0)
-    lg.SetMargin(0.4)
-    lg.SetBorderSize(0)
+    lg.SetMargin(0.3)
+    lg.SetBorderSize(1)
     # lg.SetNColumns(2)
     # lg.SetHeader('text')
-    # lg.SetFillStyle(1001) # solid
+    lg.SetFillStyle(1001) # solid
 
 
 def set_graph_style(gr, **kwargs):
@@ -182,6 +185,24 @@ def get_min_y_graphs(grs):
     return min_y
 
 
+def get_max_x_graphs(grs):
+    max_x = 0.
+    for gr in grs:
+        max_x_gr = max(list(gr.GetX()))
+        if max_x_gr > max_x:
+            max_x = max_x_gr
+    return max_x
+
+
+def get_min_x_graphs(grs):
+    min_x = math.inf
+    for gr in grs:
+        min_x_gr = min(list(gr.GetX()))
+        if min_x_gr < min_x:
+            min_x = min_x_gr
+    return min_x
+
+
 def draw_statbox(h1, **kwargs):
     # use c1.Update() beforehand
     x1 = kwargs.get('x1', 0.72)
@@ -195,6 +216,41 @@ def draw_statbox(h1, **kwargs):
     p1.SetX2NDC(x2)
     p1.SetY2NDC(y2)
     p1.Draw()
+
+
+# def get_bin_minimum_th2(h2):
+#     bin_x = ctypes.c_int(0)
+#     bin_y = ctypes.c_int(0)
+#     bin_z = ctypes.c_int(0)
+
+#     min_value = h2.GetMinimumBin(bin_x, bin_y, bin_z)
+#     center_x = h2.GetXaxis().GetBinCenter(bin_x.value)
+#     center_y = h2.GetYaxis().GetBinCenter(bin_y.value)
+
+#     return min_value, bin_x.value, bin_y.value, center_x, center_y
+
+
+def get_bin_minimum_th2(h2):
+    n_bins_x = h2.GetNbinsX()
+    n_bins_y = h2.GetNbinsY()
+
+    min_value = float('inf')
+    min_bin_x = -1
+    min_bin_y = -1
+
+    for i in range(1, n_bins_x + 1):
+        for j in range(1, n_bins_y + 1):
+            content = h2.GetBinContent(i, j)
+            if content < min_value:
+                min_value = content
+                min_bin_x = i
+                min_bin_y = j
+
+    # Get bin centers
+    center_x = h2.GetXaxis().GetBinCenter(min_bin_x)
+    center_y = h2.GetYaxis().GetBinCenter(min_bin_y)
+
+    return min_value, min_bin_x, min_bin_y, center_x, center_y
 
 
 # def draw_statboxes(h1, h2, **kwargs):
@@ -331,6 +387,16 @@ def set_time_display(gr):
     gr.GetYaxis().SetTitleOffset(1.5)
     gr.GetXaxis().SetLabelOffset(0.05)
 
+    # start_time = datetime(2024, 1, 1)
+    # dates = []
+    # for i in range(len(ratios)):
+        # timestamp = (start_time + timedelta(days=i)).timestamp()
+        # dates.append(float(timestamp))
+    # gr_nl.GetXaxis().SetTimeOffset(0)
+    # gr_nl.GetXaxis().SetTimeDisplay(1)
+    # gr_nl.GetXaxis().SetTimeFormat("%Y/%m")
+    # gr_nl.GetXaxis().SetNdivisions(105, 1)
+
 
 def get_residual(h1, f1, x_min, x_max):
     xs = []
@@ -351,8 +417,8 @@ def get_gr_values_list(gr, **kwargs):
     else:
         values = gr.GetY()
         errs = gr.GetEY()
-    values.SetSize(gr.GetN())
-    errs.SetSize(gr.GetN())
+    # values.SetSize(gr.GetN())
+    # errs.SetSize(gr.GetN())
     return list(values), list(errs)
 
 
@@ -382,6 +448,20 @@ def get_tspectrum_peaks(h1, sigma, threshold):
     peaks.sort()
 
     return peaks
+
+
+def get_first_nonzero_bin(h1):
+    for i in range(1, h1.GetNbinsX() + 1):
+        if h1.GetBinContent(i) > 0:
+            return i
+    return -1
+
+
+def get_last_nonzero_bin(h1):
+    for i in range(h1.GetNbinsX(), 0, -1):
+        if h1.GetBinContent(i) > 0:
+            return i
+    return -1
 
 
 # gPad.Update()
